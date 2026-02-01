@@ -1,0 +1,13 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    env_file:
+      - .env
+    ports:
+      - '5433:5432'
+    volumes:
+      - vol-pgdata:/var/lib/postgresql/data
+
+volumes:
+  vol-pgdata:
+    name: vol-pgdata
