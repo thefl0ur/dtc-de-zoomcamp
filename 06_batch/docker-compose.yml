@@ -1,0 +1,35 @@
+services:
+  master:
+    build: 
+      context: .
+      dockerfile: Dockerfile.master
+    container_name: spark-master
+    ports:
+      - "8080:8080"   # Spark Master UI
+      - "7077:7077"   # Spark Master Port
+    environment:
+      - SPARK_MODE=master
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_MASTER_HOST=spark-master
+      - SPARK_MASTER_PORT=7077
+    networks:
+      - spark-network
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    container_name: spark-worker
+    depends_on:
+      - master
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_WORKER_CORES=2
+      - SPARK_WORKER_MEMORY=2g
+    networks:
+      - spark-network
+
+networks:
+  spark-network:
+    driver: bridge
