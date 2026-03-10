@@ -1,0 +1,3 @@
+[submodule "05_data_platforms"]
+	path = 05_data_platforms
+	url = git@github.com:thefl0ur/dtc-de-zoomcamp-bruin.git
